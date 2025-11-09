@@ -1,4 +1,4 @@
-const CACHE_NAME = 'invoiza-v1';
+const CACHE_NAME = 'invoiza-v2';
 // Use BASE_URL-aware paths; on GitHub Pages the app is served from /invoiza/
 const BASE = '/invoiza/';
 const urlsToCache = [
