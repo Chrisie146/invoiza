@@ -1,4 +1,4 @@
-# Invoice & Quote Manager 📱
+# Invoiza 📱
 
 A professional Progressive Web App (PWA) for managing invoices, quotes, and customer statements with SARS-compliant tax invoice generation.
 

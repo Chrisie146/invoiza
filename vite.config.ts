@@ -3,7 +3,8 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/invoice_app/', // GitHub Pages base path - update if repo name is different
+  // Updated to match new GitHub Pages repository name 'invoiza'
+  base: '/invoiza/',
   plugins: [react()],
   build: {
     rollupOptions: {

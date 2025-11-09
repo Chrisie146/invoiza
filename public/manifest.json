@@ -1,9 +1,9 @@
 {
-  "name": "Invoice & Quote Manager",
-  "short_name": "Invoice Manager",
+  "name": "Invoiza",
+  "short_name": "Invoiza",
   "description": "Professional invoice and quote management application",
-  "start_url": "/invoice_app/",
-  "scope": "/invoice_app/",
+  "start_url": "/invoiza/",
+  "scope": "/invoiza/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#3B82F6",

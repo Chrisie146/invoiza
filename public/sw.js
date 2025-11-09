@@ -1,8 +1,10 @@
-const CACHE_NAME = 'invoice-manager-v1';
+const CACHE_NAME = 'invoiza-v1';
+// Use BASE_URL-aware paths; on GitHub Pages the app is served from /invoiza/
+const BASE = '/invoiza/';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json'
+  BASE,
+  BASE + 'index.html',
+  BASE + 'manifest.json'
 ];
 
 // Install event - cache assets
@@ -10,7 +12,7 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('Opened cache');
+  console.log('Opened cache');
         return cache.addAll(urlsToCache);
       })
   );
