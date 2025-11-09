@@ -935,16 +935,34 @@ const InvoiceQuoteApp = () => {
     window.addEventListener('beforeinstallprompt', handler);
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
-
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-      showToast('App installed successfully!');
+    // If deferredPrompt exists (native PWA install), use it
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        showToast('App installed successfully!');
+      }
+      setDeferredPrompt(null);
+      setShowInstallPrompt(false);
+      return;
     }
-    setDeferredPrompt(null);
-    setShowInstallPrompt(false);
+
+    // Fallback: show instructions for manual installation
+    const userAgent = navigator.userAgent.toLowerCase();
+    let instructions = '';
+
+    if (userAgent.includes('chrome') || userAgent.includes('edge')) {
+      instructions = `📱 To install Invoiza on your device:\n\n1. Click the menu icon (⋮) in your browser\n2. Select "Install app" or "Create shortcut"\n3. Choose where to install (Home screen, taskbar, etc.)\n4. Done! You can now use the app offline.`;
+    } else if (userAgent.includes('firefox')) {
+      instructions = `📱 To install Invoiza on your device:\n\n1. Tap the menu icon (⋮) in Firefox\n2. Select "Install" from the menu\n3. Follow the prompts to add to your device\n4. You can now use the app offline.`;
+    } else if (userAgent.includes('safari') || userAgent.includes('iphone') || userAgent.includes('ipad')) {
+      instructions = `📱 To install Invoiza on your device:\n\n1. Tap the Share button (⬆️) in Safari\n2. Scroll down and tap "Add to Home Screen"\n3. Enter a name and tap "Add"\n4. Done! You can now use the app offline.`;
+    } else {
+      instructions = `📱 To install Invoiza:\n\nOn Android: Look for an "Install" button in your browser menu or address bar.\n\nOn iPhone: Use Safari and tap Share → Add to Home Screen.\n\nOn Desktop: Check your browser menu (⋮) for install options.`;
+    }
+
+    showToast(instructions, 'success');
   };
 
 
@@ -2261,16 +2279,14 @@ ${businessSettings?.phone || ''}`;
           <div className="flex justify-between items-center py-4">
             <h1 className="text-2xl font-bold text-gray-900">Invoiza</h1>
             <div className="flex items-center gap-2">
-              {deferredPrompt && (
-                <button
-                  onClick={handleInstallClick}
-                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-colors font-medium"
-                  title="Install Invoiza App"
-                >
-                  <Download size={20} />
-                  <span className="hidden sm:inline">Install App</span>
-                </button>
-              )}
+              <button
+                onClick={handleInstallClick}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-colors font-medium"
+                title="Install Invoiza App"
+              >
+                <Download size={20} />
+                <span className="hidden sm:inline">Install App</span>
+              </button>
               <button
                 onClick={() => setShowSettingsForm(true)}
                 className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
