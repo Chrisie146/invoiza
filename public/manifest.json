@@ -1,5 +1,5 @@
 {
-  "name": "Invoiza",
+  "name": "Invoiza - Invoice & Quote Manager",
   "short_name": "Invoiza",
   "description": "Professional invoice and quote management application",
   "start_url": "/invoiza/",
@@ -8,6 +8,7 @@
   "background_color": "#ffffff",
   "theme_color": "#3B82F6",
   "orientation": "portrait-primary",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "Square44x44Logo.targetsize-192.png",
