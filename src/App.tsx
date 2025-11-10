@@ -236,7 +236,6 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ settings, onSubmit, onCance
     if (!formData.email.trim()) v.email = 'Email is required';
     else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.email)) v.email = 'Invalid email';
     if (!formData.phone.trim()) v.phone = 'Phone is required';
-    if (!formData.vatNumber.trim()) v.vatNumber = 'VAT number is required';
     if (!formData.companyRegistration.trim()) v.companyRegistration = 'Company registration is required';
     if (!formData.address.trim()) v.address = 'Address is required';
     return v;
@@ -326,7 +325,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ settings, onSubmit, onCance
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                VAT Number *
+                VAT Number (optional)
               </label>
               <input
                 type="text"
@@ -334,9 +333,9 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ settings, onSubmit, onCance
                 value={formData.vatNumber}
                 onChange={handleChange}
                 placeholder="e.g. 4123456789"
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.vatNumber ? 'border-red-500' : 'border-gray-300'}`}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              {errors.vatNumber && <p className="text-xs text-red-600 mt-1">{errors.vatNumber}</p>}
+              <p className="text-xs text-gray-500 mt-1">Leave blank if your company is not VAT registered</p>
             </div>
 
             <div className="md:col-span-2">
@@ -2331,6 +2330,34 @@ ${businessSettings?.phone || ''}`;
 
         {activeTab === 'dashboard' && (
           <div className="space-y-6">
+            {businessSettings && businessSettings.businessName && (
+              <div className="bg-linear-to-r rounded-lg shadow-md p-8 text-white" style={{ backgroundColor: getPrimaryColor() }}>
+                <h1 className="text-4xl font-bold">{businessSettings.businessName}</h1>
+                {businessSettings.address && (
+                  <p className="mt-2 text-white/80">{businessSettings.address}</p>
+                )}
+                <div className="mt-4 flex flex-wrap gap-6 text-sm text-white/90">
+                  {businessSettings.email && (
+                    <div>
+                      <p className="font-semibold">Email</p>
+                      <p>{businessSettings.email}</p>
+                    </div>
+                  )}
+                  {businessSettings.phone && (
+                    <div>
+                      <p className="font-semibold">Phone</p>
+                      <p>{businessSettings.phone}</p>
+                    </div>
+                  )}
+                  {businessSettings.vatNumber && (
+                    <div>
+                      <p className="font-semibold">VAT Number</p>
+                      <p>{businessSettings.vatNumber}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="bg-linear-to-br from-blue-50 to-blue-100 p-6 rounded-lg shadow-sm border border-blue-200">
                 <div className="flex items-center gap-3">
