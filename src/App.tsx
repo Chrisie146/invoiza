@@ -2278,24 +2278,14 @@ ${businessSettings?.phone || ''}`;
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <h1 className="text-2xl font-bold text-gray-900">Invoiza</h1>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handleInstallClick}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-colors font-medium"
-                title="Install Invoiza App"
-              >
-                <Download size={20} />
-                <span className="hidden sm:inline">Install App</span>
-              </button>
-              <button
-                onClick={() => setShowSettingsForm(true)}
-                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-                title="Business Settings"
-              >
-                <Settings size={20} />
-                <span className="hidden sm:inline">Settings</span>
-              </button>
-            </div>
+            <button
+              onClick={() => setShowSettingsForm(true)}
+              className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+              title="Business Settings"
+            >
+              <Settings size={20} />
+              <span className="hidden sm:inline">Settings</span>
+            </button>
           </div>
         </div>
       </div>
