@@ -784,18 +784,20 @@ const DocumentForm: React.FC<DocumentFormProps> = ({ document, documentType, cus
               {formData.items.map((item) => {
                 const ie = submitted ? itemErrors(item) : {};
                 return (
-                <div key={item.id} className="flex gap-2 items-end">
+                <div key={item.id} className="flex flex-col md:flex-row gap-2 p-3 border border-gray-200 rounded-lg">
                   <div className="flex-1">
+                    <label className="block text-xs font-medium text-gray-700 mb-1">Description</label>
                     <input
                       type="text"
-                      placeholder="Description"
+                      placeholder="Item description"
                       value={item.description}
                       onChange={(e) => updateItem(item.id, { description: e.target.value })}
                       className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${ie.description ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {ie.description && <p className="text-xs text-red-600 mt-1">{ie.description}</p>}
                   </div>
-                  <div className="w-20">
+                  <div className="w-full md:w-20">
+                    <label className="block text-xs font-medium text-gray-700 mb-1">Qty</label>
                     <input
                       type="number"
                       placeholder="Qty"
@@ -807,7 +809,8 @@ const DocumentForm: React.FC<DocumentFormProps> = ({ document, documentType, cus
                     />
                     {ie.quantity && <p className="text-xs text-red-600 mt-1">{ie.quantity}</p>}
                   </div>
-                  <div className="w-24">
+                  <div className="w-full md:w-24">
+                    <label className="block text-xs font-medium text-gray-700 mb-1">Rate</label>
                     <input
                       type="number"
                       placeholder="Rate"
@@ -819,7 +822,8 @@ const DocumentForm: React.FC<DocumentFormProps> = ({ document, documentType, cus
                     />
                     {ie.rate && <p className="text-xs text-red-600 mt-1">{ie.rate}</p>}
                   </div>
-                  <div className="w-24">
+                  <div className="w-full md:w-24">
+                    <label className="block text-xs font-medium text-gray-700 mb-1">Amount</label>
                     <input
                       type="number"
                       placeholder="Amount"
@@ -831,9 +835,10 @@ const DocumentForm: React.FC<DocumentFormProps> = ({ document, documentType, cus
                   <button
                     type="button"
                     onClick={() => removeItem(item.id)}
-                    className="text-red-600 hover:text-red-800 p-2"
+                    className="text-red-600 hover:text-red-800 p-2 self-end md:self-center"
+                    aria-label="Remove item"
                   >
-                    <Trash2 size={16} />
+                    <Trash2 size={20} />
                   </button>
                 </div>
               );})}
