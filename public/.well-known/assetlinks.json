@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "io.github.chrisie146.twa",
+    "sha256_cert_fingerprints": [
+      "F1:CD:8F:5D:61:EE:EC:19:0F:37:07:7E:A3:4C:C3:31:22:4A:1D:02:9F:25:4C:F3:8D:58:EB:34:51:34:09:56"
+    ]
+  }
+}]
