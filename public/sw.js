@@ -1,26 +1,20 @@
-const CACHE_NAME = 'invoiza-v2';
+const CACHE_NAME = 'invoiza-v3';
 // Use BASE_URL-aware paths; on GitHub Pages the app is served from /invoiza/
 const BASE = '/invoiza/';
-const urlsToCache = [
-  BASE,
-  BASE + 'index.html',
-  BASE + 'manifest.json'
-];
 
-// Install event - cache assets
+// Install event - skip pre-caching to avoid failures
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-  console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
-  );
+  console.log('Service Worker installing...');
   self.skipWaiting();
 });
 
 // Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', (event) => {
+  // Skip non-GET requests
+  if (event.request.method !== 'GET') {
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
@@ -28,24 +22,27 @@ self.addEventListener('fetch', (event) => {
         if (response) {
           return response;
         }
-        return fetch(event.request).then(
-          (response) => {
-            // Check if valid response
-            if(!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-
-            // Clone the response
-            const responseToCache = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
-
+        // Not in cache, try network
+        return fetch(event.request).then((response) => {
+          // Don't cache non-successful responses
+          if (!response || response.status !== 200 || response.type === 'error') {
             return response;
           }
-        );
+          // Clone and cache successful responses
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME)
+            .then((cache) => {
+              cache.put(event.request, responseToCache);
+            })
+            .catch(() => {
+              // Silently fail if caching fails
+            });
+          return response;
+        });
+      })
+      .catch(() => {
+        // Network request failed, return nothing for now
+        return undefined;
       })
   );
 });
